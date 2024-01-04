@@ -22,4 +22,5 @@ from famous_men.views import FamousMenAPIView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/famous-men-list/', FamousMenAPIView.as_view()),
+    path('api/v1/famous-men-list/<int:pk>/', FamousMenAPIView.as_view()),
 ]

@@ -13,11 +13,34 @@ class FamousMenAPIView(APIView):
     def post(self, request):
         serializer = FamousMenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        serializer.save()
 
-        post_new = FamousMen.objects.create(
-            title=request.data['title'],
-            content=request.data['content'],
-            category_id=request.data['category_id']
-        )
+        return Response({'post': serializer.data})
 
-        return Response({'post': FamousMenSerializer(post_new).data})
+    def put(self, request, *args, **kwargs):
+        pk = kwargs.get("pk", None)
+        if not pk:
+            return Response({"error": "Method PUT not allowed"})
+
+        try:
+            instance = FamousMen.objects.get(pk=pk)
+        except:
+            return Response({"error": "Object does not exist"})
+
+        serializer = FamousMenSerializer(data=request.data, instance=instance)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"post": serializer.data})
+
+    def delete(self, request, *args, **kwargs):
+        pk = kwargs.get("pk", None)
+        if not pk:
+            return Response({"error": "Method DELETE not allowed"})
+
+        try:
+            instance = FamousMen.objects.get(pk=pk)
+            instance.delete()
+        except:
+            return Response({"error": "Object does not exist"})
+
+        return Response({"post": "delete post " + str(pk)})
