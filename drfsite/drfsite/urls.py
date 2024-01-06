@@ -17,10 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from famous_men.views import FamousMenAPIView
+from famous_men.views import FamousMenAPIList, FamousMenAPIUpdate, FamousMenAPIDetailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/famous-men-list/', FamousMenAPIView.as_view()),
-    path('api/v1/famous-men-list/<int:pk>/', FamousMenAPIView.as_view()),
+    path('api/v1/famous-men-list/', FamousMenAPIList.as_view()),
+    path('api/v1/famous-men-list/<int:pk>/', FamousMenAPIUpdate.as_view()),
+    path('api/v1/famous-men-detail/<int:pk>/', FamousMenAPIDetailView.as_view()),
 ]
