@@ -1,19 +1,14 @@
-from rest_framework import generics
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
 
 from .models import FamousMen
 from .serializers import FamousMenSerializer
 
 
-class FamousMenAPIList(generics.ListCreateAPIView):
-    queryset = FamousMen.objects.all()
-    serializer_class = FamousMenSerializer
-
-
-class FamousMenAPIUpdate(generics.UpdateAPIView):
-    queryset = FamousMen.objects.all()
-    serializer_class = FamousMenSerializer
-
-
-class FamousMenAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+class FamousMenViewSet(mixins.CreateModelMixin,
+                       mixins.RetrieveModelMixin,
+                       mixins.UpdateModelMixin,
+                       mixins.ListModelMixin,
+                       GenericViewSet):
     queryset = FamousMen.objects.all()
     serializer_class = FamousMenSerializer
