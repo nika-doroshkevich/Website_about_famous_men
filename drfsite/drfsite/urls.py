@@ -16,9 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
+from famous_men.views import (
+    FamousMenAPIList,
+    FamousMenAPIUpdate,
+    FamousMenAPIDestroy,
+    CategoryPeopleCountView,
+    FamousMenCountView
+)
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenVerifyView, TokenRefreshView
-
-from famous_men.views import FamousMenAPIList, FamousMenAPIUpdate, FamousMenAPIDestroy
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +31,8 @@ urlpatterns = [
     path('api/v1/famous-men/', FamousMenAPIList.as_view()),
     path('api/v1/famous-men/<int:pk>/', FamousMenAPIUpdate.as_view()),
     path('api/v1/famous-men-delete/<int:pk>/', FamousMenAPIDestroy.as_view()),
+    path('api/v1/category-people-count/', CategoryPeopleCountView.as_view()),
+    path('api/v1/famous-men-count/', FamousMenCountView.as_view()),
     path('api/v1/auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
     path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
